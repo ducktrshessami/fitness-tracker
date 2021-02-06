@@ -5,7 +5,12 @@ const endpoint = "/api/workouts";
 module.exports = function(app) {
     // getLastWorkout
     app.get(endpoint, function(req, res) {
-
+        db.Workout.find()
+            .then(data => res.status(200).json(data))
+            .catch(err => {
+                console.error(err);
+                res.status(500).end();
+            });
     });
 
     // addExercise
