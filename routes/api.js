@@ -16,7 +16,12 @@ module.exports = function(app) {
 
     // addExercise
     app.put(endpoint + "/:id", function(req, res) {
-
+        db.Workout.findByIdAndUpdate(req.params.id, req.body)
+            .then(data => res.status(200).json(data))
+            .catch(err => {
+                console.error(err);
+                res.status(500).end();
+            });
     });
 
     // createWorkout
