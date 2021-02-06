@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(express.static("public"));
 require("./routes")(app);
 
-mongoose.once("open", function() {
+mongoose.connection.once("open", function() {
     console.log("Connected to the database");
     app.listen(PORT, () => {
         console.log(`Listening on PORT ${PORT}`);
