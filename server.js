@@ -19,4 +19,4 @@ mongoose.connection.once("open", function() {
     });
 });
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/fitness", { useNewUrlParser: true });
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { useNewUrlParser: true });
