@@ -6,6 +6,7 @@ module.exports = function(app) {
     // getLastWorkout
     app.get(endpoint, function(req, res) {
         db.Workout.find()
+            .sort("day")
             .then(data => res.status(200).json(data))
             .catch(err => {
                 console.error(err);
