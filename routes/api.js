@@ -48,7 +48,7 @@ module.exports = function(app) {
     app.get(endpoint + "/range", function(req, res) {
         db.Workout.find()
             .sort("day")
-            .limit(7)
+            .then(data => data.slice(-7))
             .then(data => data.map(mapWithTotalDuration))
             .then(data => res.status(200).json(data))
             .catch(err => {
