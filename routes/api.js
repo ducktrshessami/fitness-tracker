@@ -1,20 +1,17 @@
 const db = require("../models");
 
 const endpoint = "/api/workouts";
-
-// Helper function used with Array.map
-function mapWithTotalDuration(workout) {
-    let foo = JSON.parse(JSON.stringify(workout));
-    foo.totalDuration = foo.exercises.reduce((a, b) => a + b.duration, 0);
-    return foo;
-}
+const totalDuration = [{
+    $addFields: {
+        totalDuration: { $sum: "$exercises.duration" }
+    }
+}];
 
 module.exports = function(app) {
     // getLastWorkout
     app.get(endpoint, function(req, res) {
-        db.Workout.find()
+        db.Workout.aggregate(totalDuration)
             .sort("day")
-            .then(data => data.map(mapWithTotalDuration))
             .then(data => res.status(200).json(data))
             .catch(err => {
                 console.error(err);
@@ -46,10 +43,9 @@ module.exports = function(app) {
 
     // getWorkoutsInRange
     app.get(endpoint + "/range", function(req, res) {
-        db.Workout.find()
+        db.Workout.aggregate(totalDuration)
             .sort("day")
             .then(data => data.slice(-7))
-            .then(data => data.map(mapWithTotalDuration))
             .then(data => res.status(200).json(data))
             .catch(err => {
                 console.error(err);
