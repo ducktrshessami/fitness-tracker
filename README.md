@@ -1,2 +1,3 @@
 # fitness-tracker
-Homework 17
+
+Deployment: [Fitness Tracker](https://duck-fitness-tracker.herokuapp.com/)
