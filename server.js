@@ -6,12 +6,14 @@ const PORT = process.env.PORT || 8080;
 
 var app = express();
 
+// Server config
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
 require("./routes")(app);
 
+// Connect to database before starting server
 mongoose.connection.once("open", function() {
     console.log("Connected to the database");
     app.listen(PORT, () => {
